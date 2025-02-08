@@ -1,0 +1,17 @@
+{
+  "name": "xenia_plataform",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joao Quadros",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cypress": "^14.0.2",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.19.0",
+    "eslint-plugin-cypress": "^4.1.0"
+  }
+}
