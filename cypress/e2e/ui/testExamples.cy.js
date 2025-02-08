@@ -44,26 +44,28 @@ describe('template spec', () => {
             .should('be.visible')
             .click()
 
-        cy.get('input[id^=\'description-\']')
+        cy.get('input[id^=\'description-\']') // Ensure the input appears
             .should('be.visible')
 
+        // Fill the inputs
         cy.fillSteps(1, 'Main Location')
         cy.fillSteps(2, 'Inspector Name')
         cy.fillSteps(3, 'Today\'s date')
 
+        // New Section
         cy.contains('button', 'Add Section')
             .click()
 
+        // Edit new section and add a name
         cy.clickEditSection('Untitled Section')
-
         cy.get('input[placeholder="Enter Section Name"]')
             .eq(1)
             .clear({force:true})
-
         cy.get('input[placeholder="Enter Section Name"]')
             .eq(1)
             .type('Main Questions', { force: true, delay: 0 })
 
+        // Add step to new section
         cy.get('.sc-jqUVSM.sFhNt')
             .eq(1) // Section
             .find('button')
@@ -73,6 +75,7 @@ describe('template spec', () => {
         cy.contains('button', 'Save Changes')
             .should('exist')
 
+        // Fill new step
         cy.fillSteps(4, 'Take Temperature', 'Temperature')
 
         cy.get('.sc-jqUVSM.sFhNt')
@@ -90,6 +93,7 @@ describe('template spec', () => {
             .its('response.statusCode')
             .should('equal', 200)
 
+        // Publish
         cy.contains('button', 'Publish')
             .click()
 
@@ -102,7 +106,7 @@ describe('template spec', () => {
             .should('be.visible')
     })
 
-    it.only('Should create a task successfully', () => {
+    it('Should create a task successfully', () => {
 
         cy.intercept('POST', 'api/v1/task/createTask')
             .as('apiCreate')
@@ -115,19 +119,19 @@ describe('template spec', () => {
             .contains('Tasks & Work Orders')
             .click()
 
+        // Open a new task
         cy.get('div[data-attribute="cell-click"]')
             .contains('Add New')
             .should('be.visible')
-
         cy.contains('button', 'Add')
             .should('be.visible')
             .click()
-
         cy.get('div[role="tooltip"]')
             .should('be.visible')
             .contains('New Task')
             .click()
 
+        // Give a task name
         cy.get('input[placeholder="Give your task a name"]')
             .should('be.visible')
             .type('task 01')
@@ -141,6 +145,7 @@ describe('template spec', () => {
             .should('be.visible')
             .click()
 
+        // Select people
         cy.contains('Select people, teams or locations')
             .should('be.visible')
             .click()
@@ -154,7 +159,7 @@ describe('template spec', () => {
                     .check({ force: true });
             });
 
-
+        // Select location
         cy.contains('button', 'Select Location')
             .click({ force: true })
 
@@ -166,11 +171,10 @@ describe('template spec', () => {
             .find('input[type="checkbox"]')
             .check({ force: true })
 
-
+        // Add start and due date
         cy.contains('Start Date/Time')
             .should('be.visible')
             .click()
-
         cy.selectDateTime('2025-02-12', '03:30 PM')
 
         cy.contains('Due Date/Time')
@@ -178,6 +182,7 @@ describe('template spec', () => {
             .click()
         cy.selectDateTime('2025-02-13')
 
+        // Create new task
         cy.get('.MuiDialog-paper[role="dialog"]')
             .within(() => {
                 cy.contains('button', 'Create')
@@ -185,6 +190,7 @@ describe('template spec', () => {
                     .click({ force: true })
             })
 
+        // Validate api creation
         cy.wait('@apiCreate')
             .its('response.statusCode')
             .should('equal', 200)
