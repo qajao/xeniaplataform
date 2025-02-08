@@ -159,7 +159,7 @@ describe('template spec', () => {
                     .check({ force: true });
             });
 
-        // Select location
+        // Select  location
         cy.contains('button', 'Select Location')
             .click({ force: true })
 
